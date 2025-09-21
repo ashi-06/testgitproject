@@ -9,3 +9,189 @@
     Hello! This is my test git project
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Clone the Git Repository
+Go to File → Import…
+Select Git → Projects from Git → Click Next.
+Choose Clone URI → Click Next.
+Enter the repository details:
+URI: Repository URL (e.g., https://github.com/username/repo.git)
+Host and Repository path will auto-fill.
+Enter Username/Password if required.
+Click Next, select the branch(es) you want → Next.
+Choose a local directory where the repo will be cloned → Next.
+
+
+
+
+Correct pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>SE</groupId>
+  <artifactId>HospitalMgmtSystem</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1</version>
+  <name>HospitalMgmtSystem Maven Webapp</name>
+  <url>https://github.com/yourusername/HospitalMgmtSystem</url>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>4.0.4</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>HospitalMgmtSystem</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
+
+
+
+From cloned prject to our account
+git remote set-url origin https://github.com/yourusername/HospitalMgmtSystem.git
+git push -u origin main
+
+
+DEPENDENCIES
+<dependency>
+  <groupId>junit</groupId>
+  <artifactId>junit</artifactId>
+  <version>4.13.2</version>
+  <scope>test</scope>
+</dependency>
+
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>servlet-api</artifactId>
+  <version>2.5</version>
+  <scope>provided</scope>
+</dependency>
+
+<dependency>
+  <groupId>jakarta.servlet</groupId>
+  <artifactId>jakarta.servlet-api</artifactId>
+  <version>4.0.1</version>
+  <scope>provided</scope>
+</dependency>
+
+<dependency>
+  <groupId>javax.servlet.jsp</groupId>
+  <artifactId>jsp-api</artifactId>
+  <version>2.2</version>
+  <scope>provided</scope>
+</dependency>
+
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>jstl</artifactId>
+  <version>1.2</version>
+</dependency>
+
+
+<dependency>
+  <groupId>mysql</groupId>
+  <artifactId>mysql-connector-java</artifactId>
+  <version>8.0.33</version>
+</dependency>
+
+
+
+//PLUGINS
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.11.0</version>
+  <configuration>
+    <release>21</release> <!-- or source/target -->
+  </configuration>
+</plugin>
+
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-war-plugin</artifactId>
+  <version>3.3.2</version>
+  <configuration>
+    <failOnMissingWebXml>false</failOnMissingWebXml> <!-- for servlet 3+ -->
+    <warName>HospitalMgmtSystem</warName>
+  </configuration>
+</plugin>
+
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <version>3.2.5</version>
+</plugin>
+
+
+<plugin>
+  <groupId>org.apache.tomcat.maven</groupId>
+  <artifactId>tomcat7-maven-plugin</artifactId>
+  <version>2.2</version>
+  <configuration>
+    <url>http://localhost:8080/manager/text</url>
+    <server>TomcatServer</server>
+    <path>/HospitalMgmtSystem</path>
+  </configuration>
+</plugin>
+
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-clean-plugin</artifactId>
+  <version>3.2.0</version>
+</plugin>
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-install-plugin</artifactId>
+  <version>3.1.0</version>
+</plugin>
+
+
+mvn dependency:tree   # Show dependency tree
+mvn dependency:copy-dependencies
