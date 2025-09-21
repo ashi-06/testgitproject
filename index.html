@@ -314,3 +314,131 @@ mvn dependency:copy-dependencies
 | rm <file> / del <file> | Delete untracked file                               |
 | git restore <file>       | Restore file to last committed state (tracked only) |
 
+
+
+
+
+
+DOCKER
+# 📝 Part 1: Dockerfile for Your App
+
+👉 Since your project builds a *WAR file*, your Dockerfile should look like this (inside your project root folder):
+
+dockerfile
+# Use official Tomcat base image
+FROM tomcat:9.0-jdk11
+
+# Clean default webapps (optional, avoids Tomcat sample apps)
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy your WAR file from Maven build into Tomcat
+# Use wildcard so you don’t need to update version manually
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+# Expose Tomcat’s default port
+EXPOSE 8080
+
+# Start Tomcat when the container launches
+CMD ["catalina.sh", "run"]
+
+### Steps:
+
+1. Run Maven first:
+
+   bash
+   mvn clean package
+   
+
+   → generates your target/xxx.war.
+
+2. Build Docker image:
+
+   bash
+   docker build -t hospital-app .
+   
+
+3. Run container (map host 9090 → container 8080):
+
+   bash
+   docker run -d -p 9090:8080 --name hospital-container hospital-app
+   
+
+4. Open your app:
+
+   
+   http://localhost:9090/
+   
+
+---
+
+
+# 📝 Part 2: Question 4 – Redis Container
+
+Redis is separate, so you don’t need it in your Dockerfile. You just *run it as another container*.
+
+### Step 1: Pull Redis image
+
+bash
+docker pull redis:latest
+
+
+### Step 2: Run Redis container
+
+bash
+docker run -d --name my-redis -p 6379:6379 redis:latest
+
+
+* -d → detached
+* --name my-redis → easy to reference
+* -p 6379:6379 → maps Redis port
+
+### Step 3: Verify container is running
+
+bash
+docker ps
+
+
+Expected to see something like:
+
+
+CONTAINER ID   IMAGE          COMMAND                  STATUS        PORTS
+abcd1234efgh   redis:latest   "docker-entrypoint..."   Up 10 sec     0.0.0.0:6379->6379/tcp
+
+
+### Step 4: Test Redis connection
+
+Run Redis CLI inside the container:
+
+bash
+docker exec -it my-redis redis-cli ping
+
+
+Output should be:
+
+
+PONG
+
+Step 6: (Optional) Push to Docker Hub
+
+Create a free account on Docker Hub
+.
+
+In your terminal, login:
+
+docker login
+
+
+Tag your image with your username:
+
+docker tag hospital-app yourusername/hospital-app:1.0
+
+
+Push it:
+
+docker push yourusername/hospital-app:1.0
+
+
+Now anyone can pull your app with:
+
+docker pull yourusername/hospital-app:1.0
+
